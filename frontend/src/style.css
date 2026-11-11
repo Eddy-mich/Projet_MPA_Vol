@@ -1,0 +1,684 @@
+/*
+ * Feuille de style principale de VolApp.
+ * Couleurs et polices via variables CSS (convention du projet).
+ */
+:root {
+  --encre: #10233f;
+  --encre-attenuée: #5c6e88;
+  --papier: #f2f6fb;
+  --carte: #ffffff;
+  --balise: #0e86d4;
+  --balise-fonce: #0a6aad;
+  --liseré: #dde6f1;
+  --erreur: #d64545;
+  --succes: #1f9d61;
+  --avertissement: #a96a00;
+  --marine: #0a2540;
+  --marine-claire: #14406b;
+  --ciel: #7cc4f5;
+  --police: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --police-titre: "Outfit", "Inter", "Segoe UI", Arial, sans-serif;
+  --rayon: 18px;
+  --ombre-carte: 0 1px 2px rgba(16, 35, 63, 0.05), 0 10px 28px rgba(16, 35, 63, 0.08);
+  --ombre-forte: 0 30px 70px rgba(10, 37, 64, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--police);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- En-tête ---------- */
+
+header.entete {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(16, 35, 63, 0.08);
+}
+
+header.entete h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-family: var(--police-titre);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--marine);
+}
+
+.logo-marque {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--balise), #4f46e5);
+  box-shadow: 0 6px 16px rgba(14, 134, 212, 0.35);
+}
+
+header.entete nav {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: rgba(16, 35, 63, 0.06);
+}
+
+header.entete nav button {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--encre-attenuée);
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+header.entete nav button:hover {
+  color: var(--encre);
+}
+
+header.entete nav button.actif {
+  background: var(--marine);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(10, 37, 64, 0.3);
+}
+
+/* ---------- Structure de page ---------- */
+
+.contenu {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.5rem) 4rem;
+}
+
+.page-tete {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.page-tete h2 {
+  margin: 0;
+}
+
+.page-tete p {
+  margin: 0;
+  color: var(--encre-attenuée);
+  font-size: 0.92rem;
+}
+
+/* ---------- Héro (vitrine) ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  padding: clamp(3.25rem, 9vw, 6rem) clamp(1rem, 4vw, 2.5rem) clamp(6rem, 14vw, 9rem);
+  background:
+    radial-gradient(1100px 480px at 85% -10%, rgba(124, 196, 245, 0.4), transparent 60%),
+    radial-gradient(800px 420px at 5% 115%, rgba(79, 70, 229, 0.45), transparent 60%),
+    linear-gradient(160deg, var(--marine) 0%, var(--marine-claire) 55%, #1d5488 100%);
+}
+
+.hero-contenu {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(124, 196, 245, 0.4);
+  border-radius: 999px;
+  background: rgba(124, 196, 245, 0.12);
+  color: var(--ciel);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero h2 {
+  margin: 0 0 0.9rem;
+  max-width: 20ch;
+  font-family: var(--police-titre);
+  font-size: clamp(2.2rem, 5.5vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hero-sous-titre {
+  margin: 0;
+  max-width: 54ch;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-decor {
+  position: absolute;
+  right: -2%;
+  bottom: -14%;
+  width: min(520px, 60vw);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.carte-recherche {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(-1 * clamp(2.75rem, 8vw, 5rem));
+  background: var(--carte);
+  border-radius: 24px;
+  box-shadow: var(--ombre-forte);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* ---------- Atouts ---------- */
+
+.atouts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.atout {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 1.15rem 1.25rem;
+  background: var(--carte);
+  border: 1px solid var(--liseré);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre-carte);
+}
+
+.atout-icone {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(14, 134, 212, 0.1);
+  color: var(--balise);
+}
+
+.atout h3 {
+  margin: 0 0 0.15rem;
+  font-family: var(--police-titre);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.atout p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--encre-attenuée);
+}
+
+/* ---------- Typographie et composants ---------- */
+
+h2 {
+  margin: 0 0 1rem;
+  font-family: var(--police-titre);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.carte {
+  background: var(--carte);
+  border: 1px solid var(--liseré);
+  border-radius: var(--rayon);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--ombre-carte);
+}
+
+.grille {
+  display: grid;
+  gap: 0.9rem 1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grille.deux {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--encre);
+}
+
+label span {
+  letter-spacing: 0.02em;
+}
+
+input,
+select {
+  font: inherit;
+  color: var(--encre);
+  background: #fff;
+  border: 1.5px solid var(--liseré);
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input::placeholder {
+  color: #9fb0c6;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--balise);
+  box-shadow: 0 0 0 4px rgba(14, 134, 212, 0.15);
+}
+
+input.code-iata {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+button.primaire {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--balise), #2f6fe0);
+  color: #fff;
+  border: none;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.8rem 1.7rem;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(14, 134, 212, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button.primaire:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(14, 134, 212, 0.45);
+}
+
+button.primaire:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button.primaire:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.secondaire {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  border: 1.5px solid var(--liseré);
+  color: var(--encre);
+  font: inherit;
+  font-weight: 600;
+  padding: 0.65rem 1.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+button.secondaire:hover {
+  border-color: var(--encre-attenuée);
+  background: var(--papier);
+}
+
+button.danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1.5px solid var(--erreur);
+  color: var(--erreur);
+  font: inherit;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+button.danger:hover:not(:disabled) {
+  background: var(--erreur);
+  color: #fff;
+}
+
+button.danger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bandeau {
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+}
+
+.bandeau.erreur {
+  background: #fdeeec;
+  color: var(--erreur);
+  border-color: #f3c1bc;
+}
+
+.bandeau.succes {
+  background: #e9f7f0;
+  color: var(--succes);
+  border-color: #bfe5d0;
+}
+
+.bandeau.avertissement {
+  background: #fff6e6;
+  color: var(--avertissement);
+  border-color: #f2d9a7;
+}
+
+/* ---------- Segment de vol ---------- */
+
+.segment {
+  display: grid;
+  grid-template-columns: minmax(84px, auto) 1fr minmax(84px, auto);
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 0;
+}
+
+.segment-borne {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.segment-borne.arrivee {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.segment-borne .heure {
+  font-family: var(--police-titre);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.segment-borne .code {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--encre-attenuée);
+}
+
+.segment-corps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.segment-haut {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--encre-attenuée);
+}
+
+.segment-escales {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(14, 134, 212, 0.1);
+  color: var(--balise-fonce);
+  font-weight: 700;
+}
+
+.segment-escales.direct {
+  background: rgba(31, 157, 97, 0.12);
+  color: var(--succes);
+}
+
+.segment-trace {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5rem;
+}
+
+.segment-trace::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--liseré) 0 6px, transparent 6px 12px);
+}
+
+.segment-trace svg {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  background: #fff;
+  color: var(--balise);
+}
+
+.segment-bas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.35rem;
+  font-size: 0.78rem;
+  color: var(--encre-attenuée);
+}
+
+/* ---------- Offres et réservations ---------- */
+
+.offre-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--police-titre);
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--balise), #4f46e5);
+}
+
+.prix {
+  font-family: var(--police-titre);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--marine);
+}
+
+.prix small {
+  display: block;
+  font-family: var(--police);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--encre-attenuée);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+}
+
+.badge.confirme {
+  background: #e9f7f0;
+  color: var(--succes);
+}
+
+.badge.annule {
+  background: #fdeeec;
+  color: var(--erreur);
+}
+
+.passagers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.reference {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--marine);
+}
+
+.chargement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--encre-attenuée);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 50%;
+  border: 3px solid var(--liseré);
+  border-top-color: var(--balise);
+  animation: rotation 0.8s linear infinite;
+}
+
+@keyframes rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vide {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--encre-attenuée);
+  background: var(--carte);
+  border: 1px dashed var(--liseré);
+  border-radius: var(--rayon);
+}
+
+/* ---------- Pied de page ---------- */
+
+.pied {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: space-between;
+  padding: 1.5rem clamp(1rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--liseré);
+  background: #fff;
+  font-size: 0.82rem;
+  color: var(--encre-attenuée);
+}
+
+.pied strong {
+  color: var(--encre);
+  font-family: var(--police-titre);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .atouts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .grille {
+    grid-template-columns: 1fr;
+  }
+
+  .segment {
+    gap: 0.5rem;
+  }
+
+  .segment-borne .heure {
+    font-size: 1.15rem;
+  }
+}

@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: recherche-service
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+
+duffel:
+  access-token: ${DUFFEL_ACCESS_TOKEN}
+  base-url: https://api.duffel.com
+
+logging:
+  level:
+    com.volapp: INFO

@@ -1,0 +1,27 @@
+server:
+  port: 4000
+
+spring:
+  application:
+    name: reservation-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/reservations
+    username: volapp
+    password: volapp
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: 5672
+    username: guest
+    password: guest
+
+duffel:
+  access-token: ${DUFFEL_ACCESS_TOKEN}
+  base-url: https://api.duffel.com
+
+logging:
+  level:
+    com.volapp: INFO

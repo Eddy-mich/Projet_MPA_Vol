@@ -1,0 +1,110 @@
+# Infrastructure et services VolApp.
+# Usage developpement : docker compose up -d redis rabbitmq postgres
+# Usage complet      : docker compose up --build (jeton dans .env)
+
+services:
+  redis:
+    image: redis:7
+    container_name: volapp-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: volapp-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+
+  postgres:
+    image: postgres:16
+    container_name: volapp-postgres
+    environment:
+      POSTGRES_USER: volapp
+      POSTGRES_PASSWORD: volapp
+      POSTGRES_DB: volapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./infra/postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql:ro
+      - volapp-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U volapp"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  recherche-service:
+    build:
+      context: .
+      args:
+        MODULE: recherche-service
+    container_name: volapp-recherche
+    ports:
+      - "8081:8081"
+    environment:
+      DUFFEL_ACCESS_TOKEN: ${DUFFEL_ACCESS_TOKEN}
+      REDIS_HOST: redis
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  reservation-service:
+    build:
+      context: .
+      args:
+        MODULE: reservation-service
+    container_name: volapp-reservation
+    ports:
+      - "4000:4000"
+    environment:
+      DUFFEL_ACCESS_TOKEN: ${DUFFEL_ACCESS_TOKEN}
+      POSTGRES_HOST: postgres
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  gateway:
+    build:
+      context: .
+      args:
+        MODULE: gateway
+    container_name: volapp-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      RECHERCHE_URL: http://recherche-service:8081
+      RESERVATION_URL: http://reservation-service:4000
+    depends_on:
+      - recherche-service
+      - reservation-service
+
+  front:
+    image: nginx:1.27-alpine
+    container_name: volapp-front
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
+      - ./infra/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - gateway
+
+volumes:
+  volapp-postgres-data:
