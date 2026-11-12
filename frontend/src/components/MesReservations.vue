@@ -57,7 +57,7 @@ async function confirmer() {
   const reservationId = devisEnCours.value.reservationId;
   operationEnCours.value = reservationId;
   try {
-    await confirmerAnnulation(devisEnCours.value.devisId);
+    await confirmerAnnulation(reservationId, devisEnCours.value.id);
     devisEnCours.value = null;
     reservations.value = await listerReservations();
   } catch (e) {
